@@ -8,6 +8,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
+//configuration of session------------------------------------------------- 2
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.Cookie.IsEssential = true;
+});
+
+
+
 
 
 var app = builder.Build();
@@ -26,6 +35,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// for session-------------------------------2
+app.UseSession();
+
 
 app.MapControllerRoute(
 	name: "default",
